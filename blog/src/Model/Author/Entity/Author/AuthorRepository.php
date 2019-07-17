@@ -30,4 +30,9 @@ class AuthorRepository
         }
         return $author;
     }
+
+    public function add(Author $author): void
+    {
+        $this->em->persist($author);
+    }
 }

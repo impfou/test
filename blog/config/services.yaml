@@ -15,9 +15,10 @@ services:
     # this creates a service per class whose id is the fully-qualified class name
     App\:
         resource: '../src/*'
-        exclude: '../src/{DependencyInjection,Model/Author/Entity,Migrations,Tests,Kernel.php}'
+        exclude: '../src/{DependencyInjection,Model/Author/Entity,Model/Article/Entity,Migrations,Tests,Kernel.php}'
 
     App\Model\Author\Entity\Author\AuthorRepository: ~
+    App\Model\Article\Entity\Article\ArticleRepository: ~
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class

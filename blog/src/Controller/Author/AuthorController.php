@@ -7,7 +7,9 @@ namespace App\Controller\Author;
 use App\Annotation\Guid;
 use App\Controller\ErrorHandler;
 use App\Model\Author\Entity\Author\Author;
+use App\Model\Author\Entity\Author\Id;
 use App\Model\Author\UseCase\Edit;
+use App\Model\Author\UseCase\Create;
 use App\ReadModel\Author\AuthorFetcher;
 use App\ReadModel\Author\Filter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -52,6 +54,34 @@ class AuthorController extends AbstractController
 
         return $this->render('app/authors/index.html.twig', [
             'pagination' => $pagination,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/create", name=".create")
+     * @param Request $request
+     * @param Create\Handler $handler
+     * @return Response
+     */
+    public function create(Request $request, Create\Handler $handler): Response
+    {
+        $command = new Create\Command(Id::next());
+
+        $form = $this->createForm(Create\Form::class, $command);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $handler->handle($command);
+                return $this->redirectToRoute('authors.show', ['id' => $command->id]);
+            } catch (\DomainException $e) {
+                $this->errors->handle($e);
+                $this->addFlash('error', $e->getMessage());
+            }
+        }
+
+        return $this->render('app/authors/create.html.twig', [
             'form' => $form->createView(),
         ]);
     }

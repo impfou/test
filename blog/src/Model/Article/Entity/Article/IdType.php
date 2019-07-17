@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace App\Model\Author\Entity\Author;
+namespace App\Model\Article\Entity\Article;
 
 use Doctrine\DBAL\Platforms\AbstractPlatform;
 use Doctrine\DBAL\Types\GuidType;
 
 class IdType extends GuidType
 {
-    public const NAME = 'author_author_id';
+    public const NAME = 'article_article_id';
 
     public function convertToDatabaseValue($value, AbstractPlatform $platform)
     {
