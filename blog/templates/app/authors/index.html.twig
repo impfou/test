@@ -2,7 +2,7 @@
 
 {% block title %}Authors{% endblock %}
 
-{% block Authors %}
+{% block breadcrumbs %}
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
         <li class="breadcrumb-item active">Authors</li>
@@ -10,6 +10,8 @@
 {% endblock %}
 
 {% block body %}
+
+    {{ include('app/authors/_tabs.html.twig') }}
 
     <div class="card">
         <div class="card-body">
@@ -35,7 +37,7 @@
             </tr>
             </thead>
             <tbody>
-            {% for authors in pagination %}
+            {% for author in pagination %}
                 <tr>
                     <td><a href="{{ path('authors.show', {'id': author.id}) }}">{{ author.name }}</a></td>
                 </tr>

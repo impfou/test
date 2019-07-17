@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Authors{% endblock %}
+
+{% block breadcrumbs %}
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('authors') }}">Authors</a></li>
+        <li class="breadcrumb-item active">{{ author.name.full }}</li>
+    </ol>
+{% endblock %}
+
+{% block body %}
+
+    {{ include('app/authors/_tabs.html.twig') }}
+
+    <div class="controls">
+        <a href="{{ path('authors.edit', {'id': author.id}) }}" class="btn btn-primary">Edit</a>
+        <a href="{{ path('authors.show', {'id': author.id}) }}" class="btn btn-primary">View Author</a>
+    </div>
+
+    <div class="box">
+        <table class="table table-bordered">
+            <tbody>
+            <tr>
+                <th>Name</th>
+                <td>{{ author.name.full }}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

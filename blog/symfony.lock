@@ -111,6 +111,12 @@
     "knplabs/knp-components": {
         "version": "v2.1.0"
     },
+    "knplabs/knp-menu": {
+        "version": "2.3.0"
+    },
+    "knplabs/knp-menu-bundle": {
+        "version": "2.2.2"
+    },
     "knplabs/knp-paginator-bundle": {
         "version": "v4.0.0"
     },
@@ -137,6 +143,18 @@
     },
     "ramsey/uuid": {
         "version": "3.8.0"
+    },
+    "sensio/framework-extra-bundle": {
+        "version": "5.2",
+        "recipe": {
+            "repo": "github.com/symfony/recipes",
+            "branch": "master",
+            "version": "5.2",
+            "ref": "fb7e19da7f013d0d422fa9bce16f5c510e27609b"
+        },
+        "files": [
+            "config/packages/sensio_framework_extra.yaml"
+        ]
     },
     "symfony/asset": {
         "version": "v4.3.2"

@@ -9,7 +9,20 @@
         {% endblock %}
     </head>
     <body>
-        {% block body %}{% endblock %}
+        <div class="app-body">
+            <div class="sidebar">
+                <nav class="sidebar-nav">
+                    {{ knp_menu_render('sidebar', {'currentClass': 'active'}) }}
+                </nav>
+            </div>
+            <main class="main">
+                {% block breadcrumbs %}{% endblock %}
+                <div class="container-fluid">
+                    {% include '_flashes.html.twig' %}
+                    {% block body %}{% endblock %}
+                </div>
+            </main>
+        </div>
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}

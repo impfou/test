@@ -4,8 +4,10 @@ declare(strict_types=1);
 
 namespace App\Controller\Author;
 
+use App\Annotation\Guid;
 use App\Controller\ErrorHandler;
 use App\Model\Author\Entity\Author\Author;
+use App\Model\Author\UseCase\Edit;
 use App\ReadModel\Author\AuthorFetcher;
 use App\ReadModel\Author\Filter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -55,17 +57,44 @@ class AuthorController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name=".show", requirements={"id"=Guid::PATTERN})
+     * @Route("/{id}/edit", name=".edit")
      * @param Author $author
-     * @param AuthorFetcher $fetcher
+     * @param Request $request
+     * @param Edit\Handler $handler
      * @return Response
      */
-    public function show(Author $author, AuthorFetcher $fetcher): Response
+    public function edit(Author $author, Request $request, Edit\Handler $handler): Response
     {
-        $authors = $fetcher->find($author->getId()->getValue());
+        $command = Edit\Command::fromAuthor($author);
 
+        $form = $this->createForm(Edit\Form::class, $command);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            try {
+                $handler->handle($command);
+                return $this->redirectToRoute('authors.show', ['id' => $author->getId()]);
+            } catch (\DomainException $e) {
+                $this->errors->handle($e);
+                $this->addFlash('error', $e->getMessage());
+            }
+        }
+
+        return $this->render('app/authors/edit.html.twig', [
+            'author' => $author,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/{id}", name=".show", requirements={"id"=Guid::PATTERN})
+     * @param Author $author
+     * @return Response
+     */
+    public function show(Author $author): Response
+    {
         return $this->render('app/authors/show.html.twig', [
-            $authors
+            'author' => $author
         ]);
     }
 }
