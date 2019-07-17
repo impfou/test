@@ -29,6 +29,11 @@ services:
     depends_on:
       - blog-postgres
       - storage
+  blog-node:
+    image: node:11.13-alpine
+    volumes:
+      - ./blog:/app
+    working_dir: /app
   blog-postgres:
     image: postgres:11.2-alpine
     volumes:

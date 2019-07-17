@@ -16,7 +16,11 @@ docker-pull:
 docker-build:
 	docker-compose build
 
-blog-init: blog-composer-install
+blog-init: blog-composer-install blog-assets-install
 
 blog-composer-install:
 	docker-compose run --rm blog-php-cli composer install
+
+blog-assets-install:
+	docker-compose run --rm blog-node npm install
+	docker-compose run --rm blog-node npm rebuild node-sass
