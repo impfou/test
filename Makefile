@@ -16,7 +16,7 @@ docker-pull:
 docker-build:
 	docker-compose build
 
-blog-init: blog-composer-install blog-assets-install blog-wait-db blog-migrations blog-fixtures
+blog-init: blog-composer-install blog-assets-install blog-assets-dev blog-wait-db blog-migrations blog-fixtures
 
 blog-composer-install:
 	docker-compose run --rm blog-php-cli composer install
