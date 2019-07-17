@@ -9,14 +9,17 @@ doctrine:
             collate: -
 
         url: '%env(resolve:DATABASE_URL)%'
+
+        types:
+            author_author_id: 'App\Model\Author\Entity\Author\IdType'
     orm:
         auto_generate_proxy_classes: true
         naming_strategy: doctrine.orm.naming_strategy.underscore
         auto_mapping: true
         mappings:
-            App:
+            Author:
                 is_bundle: false
                 type: annotation
-                dir: '%kernel.project_dir%/src/Entity'
-                prefix: 'App\Entity'
-                alias: App
+                dir: '%kernel.project_dir%/src/Model/Author/Entity'
+                prefix: 'App\Model\Author\Entity'
+                alias: Author
