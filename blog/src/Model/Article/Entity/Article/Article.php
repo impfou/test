@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Model\Article\Entity\Article;
 
 use App\Model\Author\Entity\Author\Author;
+use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
@@ -40,7 +41,7 @@ class Article
 
     /**
      * @var Author
-     * @ORM\ManyToOne(targetEntity="App\Model\Author\Entity\Author\Author", inversedBy="changes")
+     * @ORM\ManyToOne(targetEntity="App\Model\Author\Entity\Author\Author", inversedBy="articles")
      * @ORM\JoinColumn(name="author_id", referencedColumnName="id", nullable=false, onDelete="CASCADE")
      */
     private $author;

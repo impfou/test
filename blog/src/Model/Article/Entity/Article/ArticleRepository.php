@@ -30,4 +30,9 @@ class ArticleRepository
         }
         return $article;
     }
+
+    public function add(Article $article): void
+    {
+        $this->em->persist($article);
+    }
 }
