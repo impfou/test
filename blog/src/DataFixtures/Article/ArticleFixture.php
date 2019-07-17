@@ -7,19 +7,11 @@ use App\Model\Article\Entity\Article\Id;
 use App\Model\Author\Entity\Author\Id as AuthorId;
 use App\Model\Author\Entity\Author\Author;
 use App\Model\Author\Entity\Author\Name;
-use App\ReadModel\Author\AuthorFetcher;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\Persistence\ObjectManager;
 
 class ArticleFixture extends Fixture
 {
-    private $authors;
-
-    public function __construct(AuthorFetcher $authors)
-    {
-        $this->authors = $authors;
-    }
-
     public function load(ObjectManager $manager)
     {
         $author = $this->createAuthor(

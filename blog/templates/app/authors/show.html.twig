@@ -12,8 +12,6 @@
 
 {% block body %}
 
-    {{ include('app/authors/_tabs.html.twig') }}
-
     <div class="controls">
         <a href="{{ path('authors.edit', {'id': author.id}) }}" class="btn btn-primary">Edit</a>
         <a href="{{ path('authors.show', {'id': author.id}) }}" class="btn btn-primary">View Author</a>

@@ -67,9 +67,8 @@ class Article
         $this->text = $text;
     }
 
-    public function edit(Author $author, string $name, string $text): void
+    public function edit(string $name, string $text): void
     {
-        $this->author = $author;
         $this->name = $name;
         $this->text = $text;
         $this->updateDate = new \DateTimeImmutable();

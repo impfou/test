@@ -30,6 +30,15 @@ class SidebarMenu
             ->setAttribute('class', 'nav-item')
             ->setLinkAttribute('class', 'nav-link');
 
+        $menu->addChild('Articles', ['route' => 'articles'])
+            ->setExtra('routes', [
+                ['route' => 'articles'],
+                ['pattern' => '/^articles\..+/']
+            ])
+            ->setExtra('icon', 'nav-icon icon-briefcase')
+            ->setAttribute('class', 'nav-item')
+            ->setLinkAttribute('class', 'nav-link');
+
         return $menu;
     }
 }

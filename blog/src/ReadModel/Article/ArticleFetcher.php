@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace App\ReadModel\Author;
+namespace App\ReadModel\Article;
 
-use App\Model\Author\Entity\Author\Author;
-use App\ReadModel\Author\Filter\Filter;
+use App\Model\Article\Entity\Article\Article;
+use App\ReadModel\Article\Filter\Filter;
 use Doctrine\DBAL\Connection;
 use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\Pagination\PaginationInterface;
 use Knp\Component\Pager\PaginatorInterface;
 
-class AuthorFetcher
+class ArticleFetcher
 {
     private $connection;
     private $paginator;
@@ -21,7 +21,7 @@ class AuthorFetcher
     {
         $this->connection = $connection;
         $this->paginator = $paginator;
-        $this->repository = $em->getRepository(Author::class);
+        $this->repository = $em->getRepository(Article::class);
     }
 
     /**
@@ -37,12 +37,12 @@ class AuthorFetcher
         $qb = $this->connection->createQueryBuilder()
             ->select(
                 'm.id',
-                'TRIM(CONCAT(m.name_first, \' \', m.name_last)) AS name'
+                'm.name'
             )
-            ->from('author_authors', 'm');
+            ->from('article_articles', 'm');
 
         if ($filter->name) {
-            $qb->andWhere($qb->expr()->like('LOWER(CONCAT(m.name_first, \' \', m.name_last))', ':name'));
+            $qb->andWhere($qb->expr()->like('m.name', ':name'));
             $qb->setParameter(':name', '%' . mb_strtolower($filter->name) . '%');
         }
 
@@ -55,20 +55,8 @@ class AuthorFetcher
         return $this->paginator->paginate($qb, $page, $size);
     }
 
-    public function find(string $id): ?Author
+    public function find(string $id): ?Article
     {
         return $this->repository->find($id);
-    }
-
-    public function assoc(): array
-    {
-        $stmt = $this->connection->createQueryBuilder()
-            ->select(
-                'id',
-                'TRIM(CONCAT(m.name_first, \' \', m.name_last)) AS name'
-            )
-            ->from('author_authors', 'm')
-            ->execute();
-        return $stmt->fetchAll(\PDO::FETCH_KEY_PAIR);
     }
 }

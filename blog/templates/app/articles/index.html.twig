@@ -1,11 +1,11 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Authors{% endblock %}
+{% block title %}Articles{% endblock %}
 
 {% block breadcrumbs %}
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ path('home') }}">Home</a></li>
-        <li class="breadcrumb-item active">Authors</li>
+        <li class="breadcrumb-item active">Articles</li>
     </ol>
 {% endblock %}
 
@@ -19,14 +19,13 @@
                 <div class="col-md-2">{{ form_widget(form.name) }}</div>
                 <div class="col-md-2">
                     <button type="submit" class="btn btn-primary">Filter</button>
-                    <a href="{{ path('authors') }}" class="btn btn-outline-secondary">Reset</a>
+                    <a href="{{ path('articles') }}" class="btn btn-outline-secondary">Reset</a>
                 </div>
                 <div class="col-md-2">
-                    <a href="{{ path('authors.create') }}" class="btn btn-outline-primary">Create</a>
+                    <a href="{{ path('articles.create') }}" class="btn btn-outline-primary">Create</a>
                 </div>
             </div>
             {{ form_end(form) }}
-
         </div>
     </div>
 
@@ -38,9 +37,9 @@
             </tr>
             </thead>
             <tbody>
-            {% for author in pagination %}
+            {% for article in pagination %}
                 <tr>
-                    <td><a href="{{ path('authors.show', {'id': author.id}) }}">{{ author.name }}</a></td>
+                    <td><a href="{{ path('articles.show', {'id': article.id}) }}">{{ article.name }}</a></td>
                 </tr>
             {% endfor %}
             </tbody>
