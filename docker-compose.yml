@@ -1,0 +1,54 @@
+version: '3'
+services:
+  blog-nginx:
+    build:
+      context: ./blog/docker/development
+      dockerfile: nginx.docker
+    volumes:
+      - ./blog:/app
+    depends_on:
+      - blog-php-fpm
+    ports:
+      - "8080:80"
+  blog-php-fpm:
+    build:
+      context: ./blog/docker/development
+      dockerfile: php-fpm.docker
+    volumes:
+      - ./blog:/app
+    depends_on:
+      - blog-postgres
+      - storage
+  blog-php-cli:
+    build:
+      context: ./blog/docker/development
+      dockerfile: php-cli.docker
+    volumes:
+      - ./blog:/app
+      - composer:/root/.composer/cache
+    depends_on:
+      - blog-postgres
+      - storage
+  blog-postgres:
+    image: postgres:11.2-alpine
+    volumes:
+      - blog-postgres:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: app
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: app
+    ports:
+      - "54321:5432"
+
+  storage:
+    build:
+      context: ./storage/docker/development
+      dockerfile: nginx.docker
+    volumes:
+      - ./storage:/app
+    ports:
+      - "8081:80"
+
+volumes:
+  blog-postgres:
+  composer:
